@@ -22,3 +22,7 @@ app.use(cors())
 app.use("/api/auth",authRoute)
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
+
+app.get('/', (req, res) => {
+    res.send('API is running')
+  })
