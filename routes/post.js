@@ -42,16 +42,16 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    if (post.email) {
+    // if (post.email) {
       try {
         await post.delete();
         res.status(200).json({ success: true, message: "POST Deleted" });
       } catch (err) {
         res.status(500).json(err);
       }
-    } else {
-      res.status(401).json("You can delete only your post!");
-    }
+    // } else {
+    //   res.status(401).json("You can delete only your post!");
+    // }
   } catch (err) {
     res.status(500).json(err);
   }
