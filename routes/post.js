@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const Post = require("../models/Post");
-const {verifyToken} = require("./verifyToken")
+const { verifyToken } = require("./verifyToken")
 
 //CREATE POST
-router.post("/",verifyToken, async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const newPost = new Post(req.body);
   try {
     const savedPost = await newPost.save();
@@ -14,7 +14,7 @@ router.post("/",verifyToken, async (req, res) => {
 });
 
 //UPDATE POST
-router.put("/:id",verifyToken, async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (post.email === req.body.email) {
@@ -26,7 +26,7 @@ router.put("/:id",verifyToken, async (req, res) => {
           },
           { new: true }
         );
-        res.status(200).json(updatedPost);
+        res.status(200).json({ success: true, updatedPost });
       } catch (err) {
         res.status(500).json(err);
       }
@@ -39,13 +39,13 @@ router.put("/:id",verifyToken, async (req, res) => {
 });
 
 //DELETE POST
-router.delete("/:id",verifyToken, async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (post.email === req.body.email) {
       try {
         await post.delete();
-        res.status(200).json("Post has been deleted...");
+        res.status(200).json({ success: true, message: "POST Deleted" });
       } catch (err) {
         res.status(500).json(err);
       }
